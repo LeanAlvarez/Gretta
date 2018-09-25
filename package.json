@@ -1,0 +1,28 @@
+{
+  "name": "gretta",
+  "version": "0.1.0",
+  "description": "fotos de perros en la ciudad",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "perros",
+    "colon",
+    "entre",
+    "rios",
+    "busqueda"
+  ],
+  "author": "Lean Alvarez",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.16.3",
+    "materialize-css": "^1.0.0",
+    "pug": "^2.0.3"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-rename": "^1.4.0",
+    "gulp-sass": "^4.0.1"
+  }
+}

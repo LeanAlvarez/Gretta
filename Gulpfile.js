@@ -1,7 +1,10 @@
 var gulp = require('gulp');
 var sass = require('gulp-sass');
 var rename = require('gulp-rename');
-
+var babel = require('babelify');
+var browserify = require('browserify');
+var source = require('vinyl-source-stream');
+var watchify = require('watchify');
 
 gulp.task('styles', () =>{
   gulp
@@ -17,4 +20,34 @@ gulp.task('assets',() =>{
     .pipe(gulp.dest('public'));
 })
 
-gulp.task('default', ['styles', 'assets'])
+function compile(watch) {
+  var bundle = watchify(  browserify('./src/index.js'))
+
+  function rebundle(){
+    bundle
+      .transform(babel, {presets: ["@babel/preset-env"]}) //<--(babel, {presets: ["@babel/preset-env"]} fixed
+      .bundle()
+      .pipe(source('index.js'))
+      .pipe(rename('app.js'))
+      .pipe(gulp.dest('public'));
+  }
+
+  if(watch) {
+    bundle.on('update', () => {
+      console.log('--> Bundling...');
+      rebundle();
+    })
+  }
+  rebundle();
+}
+
+gulp.task('build', () => {
+   return compile();
+});
+
+gulp.task('watch', () =>{
+  return compile(true);
+});
+
+
+gulp.task('default', ['styles', 'assets', 'build'])
